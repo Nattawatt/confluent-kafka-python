@@ -6,7 +6,7 @@ This repository for keeping code from Introduction to [Python for Apache Kafka](
 
 - [Setup Kafka](#setup-kafka)
 - [Producer](#producer)
-    - [Hands on](##hands-on--use-producer-to-send-events-to-kafka-)
+    - [Hands on](#hands-on--use-producer-to-send-events-to-kafka-)
 - Consumer
 - Schema-registry
 - Serializers/ Deserilalizers
