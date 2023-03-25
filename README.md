@@ -6,7 +6,7 @@ This repository for keeping code from Introduction to [Python for Apache Kafka](
 
 - [Setup Kafka](#setup-kafka)
 - [Producer](#producer)
-    - [Producer Example](#producer-example)
+    - [Hands on](##hands-on--use-producer-to-send-events-to-kafka-)
 - Consumer
 - Schema-registry
 - Serializers/ Deserilalizers
@@ -15,9 +15,16 @@ This repository for keeping code from Introduction to [Python for Apache Kafka](
     - Avro
 - AdminClient
 
-# Setup Kafka ( TODO )
+# Setup ( TODO )
 
+## Kafka cluster
 Create config file
+
+## Client python
+
+```bash
+poetry install
+```
 
 # Producer
 ## producer responsibility
@@ -124,3 +131,5 @@ if __name__ == '__main__':
 ```bash
 python producer.py
 ```
+
+Notice how the different names, which we are using for keys, result in specific partition assignments. To get a better idea of how this works, you can try changing some of the names and see how the partition assignment changes.
