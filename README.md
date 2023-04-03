@@ -7,7 +7,8 @@ This repository for keeping code from Introduction to [Python for Apache Kafka](
 - [Setup Kafka](#setup-kafka)
 - [Producer](#producer)
     - [Hands on](#hands-on--use-producer-to-send-events-to-kafka-)
-- Consumer
+- [Consumer](#consumer)
+    - [Hands on](#hands-on--read-events-from-kafka)
 - Schema-registry
 - Serializers/ Deserilalizers
     - Protobuf
@@ -89,7 +90,7 @@ poetry shell
 
 ## Create producer.py
 
-1. Create `producer.py` at `src/producer.py`
+1. Create `01-producer.py` at `src/01-producer.py`
 
 2. Add Required Imports
 
@@ -133,3 +134,61 @@ python producer.py
 ```
 
 Notice how the different names, which we are using for keys, result in specific partition assignments. To get a better idea of how this works, you can try changing some of the names and see how the partition assignment changes.
+
+# Consumer
+
+# Hands On ( Use Consumer to Read Events from Kafka )
+
+## Create consumer.py
+
+1. Create `02-consumer.py` at `src/02-consumer.py`
+
+2. Add Required Imports
+
+```python
+from confluent_kafka import Consumer, KafkaException
+from config import config
+```
+
+3. Create function to update configuration
+
+```python
+def set_consumer_configs():
+    config['group.id'] = 'hello_group'
+    config['auto.offset.reset'] = 'earliest'
+    config['enable.auto.commit'] = False
+```
+
+4. Create a function called say_hello() that takes a consumer and a key.
+```python
+
+def assignment_callback(consumer, partitions):
+    for p in partitions:
+        print(f'Assigned to {p.topic}, partition {p.partition}')
+```
+
+5. Add the following beginnings of the main block.
+
+```python
+if __name__ == '__main__':
+    set_consumer_configs()
+    consumer = Consumer(config)
+    consumer.subscribe(['hello_topic'], on_assign=assignment_callback)
+    
+    try:
+        while True:
+            event = consumer.poll(1.0)
+            if event is None:
+                continue
+            if event.error():
+                raise KafkaException(event.error())
+            else:
+                val = event.value().decode('utf8')
+                partition = event.partition()
+                print(f'Received: {val} from partition {partition}    ')
+                # consumer.commit(event)
+    except KeyboardInterrupt:
+        print('Canceled by user.')
+    finally:
+        consumer.close()
+```

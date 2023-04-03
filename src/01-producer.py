@@ -16,6 +16,7 @@ def say_hello(producer, key):
 
 if __name__ == '__main__':
     producer = Producer(config)
-    keys = ['Amy', 'Brenda', 'Cindy', 'Derrick', 'Elaine', 'Fred']
+    keys = ['Book', 'Poon', 'Prem', 'Note', 'Nat']
+    # keys = ['Amy', 'Brenda', 'Cindy', 'Derrick', 'Elaine', 'Fred']
     [say_hello(producer, key) for key in keys]
     producer.flush()
